@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<select id="mySelect">
+    <option value="A">A</option>
+    <option value="B">B</option>
+</select>
+<input type="text" id="input"><br>
+Field2: <span id="result"></span> <br>
+
+<button id="button" >Calculate</button>
+
+<script>
+
+document.getElementById("button").onclick = function() {toCelsius(document.getElementById("input").value)};
+
+function toCelsius(fahrenheit) {
+    document.getElementById("result").innerHTML = (5/9) * (fahrenheit-32);
+}
+
+</script>
+
+</body>
+</html>
