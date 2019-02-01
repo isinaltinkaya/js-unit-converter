@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Converter</title>
+</head>
+<body>
+
+<select id="sel1">
+</select>
+<input type="text" id="input"><br>
+<select id="sel2">
+    <option value="dB">dB</option>
+</select>
+<span id="result"></span> <br>
+
+<button id="button" onclick=main()>Calculate</button>
+
+<script>
+
+    var sellist = {
+        "Percentage": ["dB"],
+        "dB": ["Percentage"],
+        "dBm": ["mW"],
+        "mW": ["dBm"]
+    };
+
+    <!--Optics-->
+    function Percentage_dB(i) { return 10*Math.log10(1+i) ;}
+    function dB_Percentage(i) { return "%" + (Math.pow(10, (i / 10)) - 1) * 100 ;}
+    function dBm_mW(i) { return Math.pow(10, (i / 10)) ;}
+    function mW_dBm(i) { return 10*Math.log10(i) ;}
+
+    window.onload = function () {
+        var sel1 = document.getElementById("sel1"),
+            sel2 = document.getElementById("sel2");
+        for (var u1 in sellist) {
+            sel1.options[sel1.options.length] = new Option(u1, u1);
+        }
+        sel1.onchange = function (){
+            sel2.length = 0;
+            var units = sellist[sel1.value];
+            for (var i = 0; i < units.length; i++) {
+                sel2.options[sel2.options.length] = new Option(units[i], units[i]);
+            }
+        }
+    };
+
+    function main() {
+        var s1 = document.getElementById("sel1").value;
+        var s2 = document.getElementById("sel2").value;
+        var res = document.getElementById("result");
+        var i = document.getElementById("input").value;
+        res.innerHTML = window[s1 + "_" + s2](parseFloat(i));
+    }
+
+</script>
+</body>
+</html>
