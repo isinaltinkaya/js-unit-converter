@@ -12,17 +12,17 @@
     </head>
     <body>
 
-        <select id="sel1" onchange="optsel2(sel1, sel2)">
+        <select id="sel1" onchange="optsel2()">
         </select>
         <input type="text" id="input"><br>
         <select id="sel2">
-            <option value="dB">dB</option>
+            <option value="dB"></option>
         </select>
         <span id="result"></span> <br>
 
         <form action="">
-        <input type="radio" name="gr_al" id="as_group" checked onclick=groups1()>As a group 
-        <input type="radio" name="gr_al" id="as_alpha" onclick=alphas1()>Alphabetically<br>
+        <input type="radio" name="gr_al" id="as_group" checked onclick=groups12()>As a group 
+        <input type="radio" name="gr_al" id="as_alpha" onclick=alphas12()>Alphabetically<br>
         </form>
 
         <button id="button" onclick=main()>Calculate</button>
@@ -33,7 +33,10 @@
                 "Percentage": ["dB"],
                 "dB": ["Percentage"],
                 "dBm": ["mW"],
-                "mW": ["dBm"]
+                "mW": ["dBm"],
+                "Celcius": ["Fahrenheit","Kelvin"],
+                "Fahrenheit": ["Celcius","Kelvin"],
+                "Kelvin": ["Celcius","Fahrenheit"]
             };
 
 function compare(strA, strB) {
@@ -62,8 +65,20 @@ function dB_Percentage(i) { return "%" + (Math.pow(10, (i / 10)) - 1) * 100 ;}
 function dBm_mW(i) { return Math.pow(10, (i / 10)) ;}
 function mW_dBm(i) { return 10*Math.log10(i) ;}
 
+    <!--Temperature-->
+function Celcius_Fahrenheit(i) { return (9 / 5) * (i + 32) ;}
+function Fahrenheit_Celcius(i) { return (5 / 9) * (i - 32) ;}
+function Cencius_Kelvin(i) { return i + 273 ;}
+function Fahrenheit_Kelvin(i) { return Fahrenheit_Celcius(i) + 273 ;}
+function Kelvin_Celcius(i) { return i - 273 ;}
+function Kelvin_Fahrenheit(i) { return Celcius_Fahrenheit(i- 273) ;}
+
+    <!--Length-->
+function Mile_Kilometer(i) { return i * 1.609344 ;}
+
 window.onload = function () {
     groups1();
+    optsel2();
 };
 
 function groups1() {
@@ -82,7 +97,7 @@ function alphas1() {
     }
 }
 
-function optsel2(sel1, sel2) {
+function optsel2() {
     var sel1 = document.getElementById("sel1"),
     sel2 = document.getElementById("sel2");
     sel2.length = 0;
@@ -90,6 +105,20 @@ function optsel2(sel1, sel2) {
     for (var i = 0; i < units.length; i++) {
         sel2.options[sel2.options.length] = new Option(units[i], units[i]);
     }
+}
+
+function groups12() {
+    document.getElementById("input").value = "";
+    document.getElementById("result").innerHTML = "";
+    groups1();
+    optsel2();
+}
+
+function alphas12() {
+    document.getElementById("input").value = "";
+    document.getElementById("result").innerHTML = "";
+    alphas1();
+    optsel2();
 }
 
 function main() {
