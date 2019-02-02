@@ -1,65 +1,105 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>Converter</title>
-</head>
-<body>
+        <title>Converter</title>
+    </head>
+    <body>
 
-<select id="sel1">
-</select>
-<input type="text" id="input"><br>
-<select id="sel2">
-    <option value="dB">dB</option>
-</select>
-<span id="result"></span> <br>
+        <select id="sel1" onchange="optsel2(sel1, sel2)">
+        </select>
+        <input type="text" id="input"><br>
+        <select id="sel2">
+            <option value="dB">dB</option>
+        </select>
+        <span id="result"></span> <br>
 
-<button id="button" onclick=main()>Calculate</button>
+        <form action="">
+        <input type="radio" name="gr_al" id="as_group" checked onclick=groups1()>As a group 
+        <input type="radio" name="gr_al" id="as_alpha" onclick=alphas1()>Alphabetically<br>
+        </form>
 
-<script>
+        <button id="button" onclick=main()>Calculate</button>
 
-    var sellist = {
-        "Percentage": ["dB"],
-        "dB": ["Percentage"],
-        "dBm": ["mW"],
-        "mW": ["dBm"]
-    };
+        <script>
+
+            var sellist = {
+                "Percentage": ["dB"],
+                "dB": ["Percentage"],
+                "dBm": ["mW"],
+                "mW": ["dBm"]
+            };
+
+function compare(strA, strB) {
+   var icmp = strA.toLowerCase().localeCompare(strB.toLowerCase());
+   if (icmp != 0) {
+       return icmp;
+   }
+   if (strA > strB) {
+       return 1;
+   } else if (strA < strB) {
+       return -1;
+   } else {
+       return 0;
+   }
+}
+
+var ordsel = {}
+
+Object.keys(sellist).sort(compare).forEach(function(key) {
+    ordsel[key] = sellist[key];
+});
 
     <!--Optics-->
-    function Percentage_dB(i) { return 10*Math.log10(1+i) ;}
-    function dB_Percentage(i) { return "%" + (Math.pow(10, (i / 10)) - 1) * 100 ;}
-    function dBm_mW(i) { return Math.pow(10, (i / 10)) ;}
-    function mW_dBm(i) { return 10*Math.log10(i) ;}
+function Percentage_dB(i) { return 10*Math.log10(1+i) ;}
+function dB_Percentage(i) { return "%" + (Math.pow(10, (i / 10)) - 1) * 100 ;}
+function dBm_mW(i) { return Math.pow(10, (i / 10)) ;}
+function mW_dBm(i) { return 10*Math.log10(i) ;}
 
-    window.onload = function () {
-        var sel1 = document.getElementById("sel1"),
-            sel2 = document.getElementById("sel2");
-        for (var u1 in sellist) {
-            sel1.options[sel1.options.length] = new Option(u1, u1);
-        }
-        sel1.onchange = function (){
-            sel2.length = 0;
-            var units = sellist[sel1.value];
-            for (var i = 0; i < units.length; i++) {
-                sel2.options[sel2.options.length] = new Option(units[i], units[i]);
-            }
-        }
-    };
+window.onload = function () {
+    groups1();
+};
 
-    function main() {
-        var s1 = document.getElementById("sel1").value;
-        var s2 = document.getElementById("sel2").value;
-        var res = document.getElementById("result");
-        var i = document.getElementById("input").value;
-        res.innerHTML = window[s1 + "_" + s2](parseFloat(i));
+function groups1() {
+    var sel1 = document.getElementById("sel1");
+    sel1.length = 0;
+    for (var u1 in sellist) {
+        sel1.options[sel1.options.length] = new Option(u1, u1);
     }
+}
 
-</script>
-</body>
+function alphas1() {
+    var sel1 = document.getElementById("sel1");
+    sel1.length = 0;
+    for (var u1 in ordsel) {
+        sel1.options[sel1.options.length] = new Option(u1, u1);
+    }
+}
+
+function optsel2(sel1, sel2) {
+    var sel1 = document.getElementById("sel1"),
+    sel2 = document.getElementById("sel2");
+    sel2.length = 0;
+    var units = sellist[sel1.value];
+    for (var i = 0; i < units.length; i++) {
+        sel2.options[sel2.options.length] = new Option(units[i], units[i]);
+    }
+}
+
+function main() {
+    var s1 = document.getElementById("sel1").value;
+    var s2 = document.getElementById("sel2").value;
+    var res = document.getElementById("result");
+    var i = document.getElementById("input").value;
+    res.innerHTML = window[s1 + "_" + s2](parseFloat(i));
+}
+
+        </script>
+    </body>
 </html>
