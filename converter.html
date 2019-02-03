@@ -37,11 +37,17 @@
                     <span id="result"></span> 
                 </div>
             </div>
-            <div class="form-group">
-                <input type="radio" name="gr_al" id="as_group" checked onclick="groups12()">As a group 
-                <input type="radio" name="gr_al" id="as_alpha" onclick="alphas12()">Alphabetically
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="radio" name="gr_al" id="as_group" checked onclick="groups12()">As a group 
+                        <input type="radio" name="gr_al" id="as_alpha" onclick="alphas12()">Alphabetically
+                    </div>
+                </div>
+                <div class="col-3">
+                    <button id="button" class="btn btn-dark" onclick="main()">Calculate</button>
+                </div>
             </div>
-            <button id="button" class="btn btn-dark" onclick="main()">Calculate</button>
         </div>
 
         <script>
