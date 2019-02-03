@@ -36,7 +36,14 @@
                 "mW": ["dBm"],
                 "Celcius": ["Fahrenheit","Kelvin"],
                 "Fahrenheit": ["Celcius","Kelvin"],
-                "Kelvin": ["Celcius","Fahrenheit"]
+                "Kelvin": ["Celcius","Fahrenheit"],
+                "Mile": ["Kilometer","Meter","Feet","Inch","Centimeter","Millimeter"],
+                "Kilometer": ["Mile","Meter","Feet","Inch","Centimeter","Millimeter"],
+                "Meter": ["Kilometer","Mile","Inch","Feet","Centimeter","Millimeter"],
+                "Feet": ["Mile","Kilometer","Meter","Inch","Centimeter","Millimeter"],
+                "Inch": ["Mile","Kilometer","Feet","Meter","Centimeter","Millimeter"],
+                "Centimeter": ["Mile","Kilometer","Meter","Feet","Inch","Millimeter"],
+                "Millimeter": ["Kilometer","Mile","Meter","Feet","Inch","Centimeter"]
             };
 
 function compare(strA, strB) {
@@ -75,6 +82,49 @@ function Kelvin_Fahrenheit(i) { return Celcius_Fahrenheit(i- 273) ;}
 
     <!--Length-->
 function Mile_Kilometer(i) { return i * 1.609344 ;}
+function Mile_Meter(i) { return Mile_Kilometer(i) * 1000 ;}
+function Meter_Feet(i) { return i * 3.280839895 ;}
+function Mile_Feet(i) { return Meter_Feet(Mile_Meter(i)) ;}
+function Mile_Centimeter(i) { return Mile_Meter(i) * 100 ;}
+function Mile_Inch(i) { return Mile_Centimeter(i) * 2.54 ;}
+function Mile_Milimeter(i) { return Mile_Meter(i) * 1000 ;}
+function Kilometer_Mile(i) { return i / 1.609344 ;}
+function Kilometer_Meter(i) { return i 0 1000 ;}
+function Kilometer_Feet(i) { return Meter_Feet(Kilometer_Meter(i)) ;}
+function Kilometer_Centimeter(i) { return i * 100000 ;}
+function Kilometer_Inch(i) { return Kilometer_Centimeter(i) * 2.54 ;}
+function Kilometer_Millimeter(i) { return i * 1000000 ;}
+function Meter_Kilometer(i) { return i/1000 ;}
+function Meter_Mile(i) { return Kilometer_Mile(i/1000) ;}
+function Meter_Centimeter(i) { return i*100 ;}
+function Meter_Inch(i) { return Meter_Centimeter(i) * 2.54 ;}
+function Meter_Millimeter(i) { return i * 1000 ;}
+function Feet_Meter(i) { return i / 3.280839895 ;}
+function Feet_Mile(i) { return Meter_Mile(Feet_Meter(i)) ;}
+function Feet_Kilometer(i) { return Feet_Meter(i) / 1000 ;}
+function Feet_Inch(i) { return Meter_Inch(Feet_Meter(i)) ;}
+function Feet_Centimeter(i) { return Feet_Meter(i) * 100 ;}
+function Feet_Millimeter(i) { return Feet_Meter(i) * 1000 ;}
+function Inch_Meter(i) { return i * 0.0254 ;}
+function Inch_Kilometer(i) { return Inch_Meter(i) / 1000 ;}
+function Inch_Mile(i) { return Kilometer_Mile(Inch_Kilometer(i)) ;}
+function Inch_Feet(i) { return Meter_Feet(Inch_Meter(i)) ;}
+function Inch_Centimeter(i) { return i * 2.54 ;}
+function Inch_Millimeter(i) { return i * 25.4 ;}
+function Centimeter_Mile(i) { return Meter_Mile( i / 100 ) ;}
+function Centimeter_Kilometer(i) { return i / 100000 ;}
+function Centimeter_Meter(i) { return i / 100 ;}
+function Centimeter_Feet(i) { return Meter_Feet(Centimeter_Meter(i)) ;}
+function Centimeter_Inch(i) { return i / 2.54 ;}
+function Centimeter_Millimeter(i) { return i * 10 ;}
+function Millimeter_Kilometer(i) { return i / 1000000 ;}
+function Millimeter_Mile(i) { return Meter_Mile( i/1000 ) ;}
+function Millimeter_Meter(i) { return i / 1000 ;}
+function Millimeter_Feet(i) { return Meter_Feet(Millimeter_Meter(i)) ;}
+function Millimeter_Centimeter(i) { return i / 10 ;}
+function Millimeter_Inch(i) { return Millimeter_Centimeter(i) * 2.54 ;}
+
+    <!--Mass-->
 
 window.onload = function () {
     groups1();
