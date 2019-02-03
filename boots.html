@@ -11,21 +11,38 @@
         <title>Converter</title>
     </head>
     <body>
-
-        <select id="sel1" onchange="optsel2()">
-        </select>
-        <input type="text" id="input"><br>
-        <select id="sel2">
-            <option value="dB"></option>
-        </select>
-        <span id="result"></span> <br>
-
-        <form action="">
-        <input type="radio" name="gr_al" id="as_group" checked onclick=groups12()>As a group 
-        <input type="radio" name="gr_al" id="as_alpha" onclick=alphas12()>Alphabetically<br>
-        </form>
-
-        <button id="button" onclick=main()>Calculate</button>
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <select id="sel1" class="form-control" onchange="optsel2()">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="input" onkeypress="regex()">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <select id="sel2" class="form-control">
+                            <option value="dB"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <span id="result"></span> 
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="radio" name="gr_al" id="as_group" checked onclick="groups12()">As a group 
+                <input type="radio" name="gr_al" id="as_alpha" onclick="alphas12()">Alphabetically
+            </div>
+            <button id="button" class="btn btn-dark" onclick="main()">Calculate</button>
+        </div>
 
         <script>
 
@@ -43,21 +60,36 @@
                 "Feet": ["Mile","Kilometer","Meter","Inch","Centimeter","Millimeter"],
                 "Inch": ["Mile","Kilometer","Feet","Meter","Centimeter","Millimeter"],
                 "Centimeter": ["Mile","Kilometer","Meter","Feet","Inch","Millimeter"],
-                "Millimeter": ["Kilometer","Mile","Meter","Feet","Inch","Centimeter"]
+                "Millimeter": ["Kilometer","Mile","Meter","Feet","Inch","Centimeter"],
+                "Kg": ["Lbs","Gr","Mg"],
+                "Lbs": ["Kg","Gr","Mg"],
+                "Gr": ["Kg","Lbs","Mg"],
+                "Mg": ["Kg","Lbs","Gr"],
+                "Radians": ["Degrees"],
+                "Degrees": ["Radians"],
+                "Joule": ["kWh","kJ","Calorie"],
+                "kJ": ["Joule","kWh","Calorie"],
+                "kWh": ["Joule","kJ","Calorie"],
+                "Calorie": ["Joule","kJ","kWh"]
             };
 
+function regex(){
+    var inp = document.getElementById("input") ;
+    inp.value = inp.value.replace(/[^0123456789.-]/g, '');
+}
+
 function compare(strA, strB) {
-   var icmp = strA.toLowerCase().localeCompare(strB.toLowerCase());
-   if (icmp != 0) {
-       return icmp;
-   }
-   if (strA > strB) {
-       return 1;
-   } else if (strA < strB) {
-       return -1;
-   } else {
-       return 0;
-   }
+    var icmp = strA.toLowerCase().localeCompare(strB.toLowerCase());
+    if (icmp != 0) {
+        return icmp;
+    }
+    if (strA > strB) {
+        return 1;
+    } else if (strA < strB) {
+        return -1;
+    } else {
+        return 0;
+    }
 }
 
 var ordsel = {}
@@ -66,7 +98,7 @@ Object.keys(sellist).sort(compare).forEach(function(key) {
     ordsel[key] = sellist[key];
 });
 
-    <!--Optics-->
+<!--Optics-->
 function Percentage_dB(i) { return 10*Math.log10(1+i) ;}
 function dB_Percentage(i) { return "%" + (Math.pow(10, (i / 10)) - 1) * 100 ;}
 function dBm_mW(i) { return Math.pow(10, (i / 10)) ;}
@@ -89,7 +121,7 @@ function Mile_Centimeter(i) { return Mile_Meter(i) * 100 ;}
 function Mile_Inch(i) { return Mile_Centimeter(i) * 2.54 ;}
 function Mile_Milimeter(i) { return Mile_Meter(i) * 1000 ;}
 function Kilometer_Mile(i) { return i / 1.609344 ;}
-function Kilometer_Meter(i) { return i 0 1000 ;}
+function Kilometer_Meter(i) { return i * 1000 ;}
 function Kilometer_Feet(i) { return Meter_Feet(Kilometer_Meter(i)) ;}
 function Kilometer_Centimeter(i) { return i * 100000 ;}
 function Kilometer_Inch(i) { return Kilometer_Centimeter(i) * 2.54 ;}
@@ -125,6 +157,38 @@ function Millimeter_Centimeter(i) { return i / 10 ;}
 function Millimeter_Inch(i) { return Millimeter_Centimeter(i) * 2.54 ;}
 
     <!--Mass-->
+function Kg_Lbs(i) { return i * 2.204622621849 ;}
+function Kg_Gr(i) { return i * 1000 ;}
+function Kg_Mg(i) { return i * 1000000 ;}
+function Lbs_Kg(i) { return i / 2.204622621849 ;}
+function Lbs_Gr(i) { return Lbs_Kg(i) * 1000 ;}
+function Lbs_Mg(i) { return Lbs_Kg(i) * 1000000 ;}
+function Gr_Kg(i) { return i / 1000 ; }
+function Gr_Lbs(i) { return Kg_Lbs(i/1000) ;}
+function Gr_mg(i) { return i * 1000 ;}
+function Mg_Kg(i) { return i / 1000000 ;}
+function Mg_Lbs(i) { return Kg_Lbs(i/1000000) ;}
+function Mg_Gr(i) { return i / 1000 ;}
+
+    <!--Angular-->
+function Radians_Degrees(i) { return 180 / Math.PI * i ;}
+function Degrees_Radians(i) { return Math.PI / 180 * i ;}
+
+    <!--Energy-->
+function Joule_kWh(i) { return i / 3600000 ;}
+function Joule_kJ(i) { return i / 1000 ;}
+function Joule_Calorie(i) { return i * 0.2390057361 ;}
+function kJ_Joule(i) { return i * 1000 ;}
+function kJ_kWh(i) { return i / 3600 ;}
+function kJ_Calorie(i) { return Joule_Calorie( i * 1000 ) ;}
+function kWh_Joule(i) { return i * 3600000 ;}
+function kWh_kJ(i) { return Joule_kJ(kWh_Joule(i)) ;}
+function kWh_Calorie(i) { return Joule_Calorie(kWh_Joule(i)) ;}
+function Calorie_Joule(i) { return i / 0.2390057361 ;}
+function Calorie_kJ(i) { return Calorie_Joule(i) / 1000 ;}
+function Calorie_kWh(i) { return Joule_kWh(Calorie_Joule(i)) ;}
+
+    <!--End of regions-->
 
 window.onload = function () {
     groups1();
@@ -149,7 +213,7 @@ function alphas1() {
 
 function optsel2() {
     var sel1 = document.getElementById("sel1"),
-    sel2 = document.getElementById("sel2");
+        sel2 = document.getElementById("sel2");
     sel2.length = 0;
     var units = sellist[sel1.value];
     for (var i = 0; i < units.length; i++) {
@@ -176,6 +240,9 @@ function main() {
     var s2 = document.getElementById("sel2").value;
     var res = document.getElementById("result");
     var i = document.getElementById("input").value;
+    if(!i) {
+        return False;
+    }
     res.innerHTML = window[s1 + "_" + s2](parseFloat(i));
 }
 
