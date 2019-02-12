@@ -105,7 +105,7 @@ Object.keys(sellist).sort(compare).forEach(function(key) {
 });
 
 <!--Optics-->
-function Percentage_dB(i) { return 10*Math.log10(1+i) ;}
+function Percentage_dB(i) { return 10*Math.log10(1+(i/100)) ;}
 function dB_Percentage(i) { return "%" + (Math.pow(10, (i / 10)) - 1) * 100 ;}
 function dBm_mW(i) { return Math.pow(10, (i / 10)) ;}
 function mW_dBm(i) { return 10*Math.log10(i) ;}
