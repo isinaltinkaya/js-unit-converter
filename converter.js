@@ -1,83 +1,29 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-        <title>Converter</title>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-3">
-                    <div class="form-group">
-                        <select id="sel1" class="form-control" onchange="optsel2()">
-                        </select>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="input" onkeypress="regex()">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <div class="form-group">
-                        <select id="sel2" class="form-control">
-                            <option value="dB"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <span id="result"></span> 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <div class="form-group">
-                        <input type="radio" name="gr_al" id="as_group" checked onclick="groups12()">As a group 
-                        <input type="radio" name="gr_al" id="as_alpha" onclick="alphas12()">Alphabetically
-                    </div>
-                </div>
-                <div class="col-3">
-                    <button id="button" class="btn btn-dark" onclick="main()">Calculate</button>
-                </div>
-            </div>
-        </div>
-
-        <script>
-
-            var sellist = {
-                "Percentage": ["dB"],
-                "dB": ["Percentage"],
-                "dBm": ["mW"],
-                "mW": ["dBm"],
-                "Celcius": ["Fahrenheit","Kelvin"],
-                "Fahrenheit": ["Celcius","Kelvin"],
-                "Kelvin": ["Celcius","Fahrenheit"],
-                "Mile": ["Kilometer","Meter","Feet","Inch","Centimeter","Millimeter"],
-                "Kilometer": ["Mile","Meter","Feet","Inch","Centimeter","Millimeter"],
-                "Meter": ["Kilometer","Mile","Inch","Feet","Centimeter","Millimeter"],
-                "Feet": ["Mile","Kilometer","Meter","Inch","Centimeter","Millimeter"],
-                "Inch": ["Mile","Kilometer","Feet","Meter","Centimeter","Millimeter"],
-                "Centimeter": ["Mile","Kilometer","Meter","Feet","Inch","Millimeter"],
-                "Millimeter": ["Kilometer","Mile","Meter","Feet","Inch","Centimeter"],
-                "Kg": ["Lbs","Gr","Mg"],
-                "Lbs": ["Kg","Gr","Mg"],
-                "Gr": ["Kg","Lbs","Mg"],
-                "Mg": ["Kg","Lbs","Gr"],
-                "Radians": ["Degrees"],
-                "Degrees": ["Radians"],
-                "Joule": ["kWh","kJ","Calorie"],
-                "kJ": ["Joule","kWh","Calorie"],
-                "kWh": ["Joule","kJ","Calorie"],
-                "Calorie": ["Joule","kJ","kWh"]
-            };
+var sellist = {
+    "Percentage": ["dB"],
+    "dB": ["Percentage"],
+    "dBm": ["mW"],
+    "mW": ["dBm"],
+    "Celcius": ["Fahrenheit","Kelvin"],
+    "Fahrenheit": ["Celcius","Kelvin"],
+    "Kelvin": ["Celcius","Fahrenheit"],
+    "Mile": ["Kilometer","Meter","Feet","Inch","Centimeter","Millimeter"],
+    "Kilometer": ["Mile","Meter","Feet","Inch","Centimeter","Millimeter"],
+    "Meter": ["Kilometer","Mile","Inch","Feet","Centimeter","Millimeter"],
+    "Feet": ["Mile","Kilometer","Meter","Inch","Centimeter","Millimeter"],
+    "Inch": ["Mile","Kilometer","Feet","Meter","Centimeter","Millimeter"],
+    "Centimeter": ["Mile","Kilometer","Meter","Feet","Inch","Millimeter"],
+    "Millimeter": ["Kilometer","Mile","Meter","Feet","Inch","Centimeter"],
+    "Kg": ["Lbs","Gr","Mg"],
+    "Lbs": ["Kg","Gr","Mg"],
+    "Gr": ["Kg","Lbs","Mg"],
+    "Mg": ["Kg","Lbs","Gr"],
+    "Radians": ["Degrees"],
+    "Degrees": ["Radians"],
+    "Joule": ["kWh","kJ","Calorie"],
+    "kJ": ["Joule","kWh","Calorie"],
+    "kWh": ["Joule","kJ","Calorie"],
+    "Calorie": ["Joule","kJ","kWh"]
+};
 
 function regex(){
     var inp = document.getElementById("input") ;
@@ -251,7 +197,3 @@ function main() {
     }
     res.innerHTML = window[s1 + "_" + s2](parseFloat(i));
 }
-
-        </script>
-    </body>
-</html>
